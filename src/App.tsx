@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+// App.tsx
+import React, { useContext } from 'react';
 import './App.css';
+import { ThemeContext, ThemeOptions, } from './context/ThemeProvider';
+import ClassComponent from './components/classComponent';
+import FunctionalComponent from './components/functionalComponent';
+import ThemeProvider from './context/ThemeProvider';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider >
+        <ThemeSwitcherButton />
+        <ClassComponent />
+        <FunctionalComponent />
+      </ThemeProvider>
     </div>
   );
+}
+
+function ThemeSwitcherButton() {
+
+  const themeContextValue = useContext(ThemeContext)
+  return (
+    <button onClick={() => {
+      themeContextValue.switchTheme(themeContextValue.state === ThemeOptions.dark ? ThemeOptions.light : ThemeOptions.dark)
+    }}>
+      Change Theme
+    </button>
+  )
 }
 
 export default App;
